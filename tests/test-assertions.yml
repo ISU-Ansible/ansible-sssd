@@ -8,12 +8,12 @@
   tasks:
     - name: "[Test] Does Configuration File Exist?"
       stat:
-        path: "{{sssd_configuration_file}}"
+        path: "{{ sssd_configuration_file.filename }}"
       register: sssd_conf
 
     - name: "[Test] Test File Defaults"
-      shell: "cat {{sssd_configuration_file}}"
-      when: sssd_conf.stat.exists == True
+      shell: "cat {{ sssd_configuration_file.filename }}"
+      when: sssd_conf.stat.exists
       register: sssd_conf_contents
 
     - assert:

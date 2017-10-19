@@ -1,6 +1,7 @@
 ---
 - name: SSSD | Include OS-specific variables
-  tags: [ 'sssd' ]
+  tags:
+    - sssd
   include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution }}_{{ ansible_distribution_major_version }}_{{ ansible_distribution_minor_version}}.yml"
@@ -12,22 +13,35 @@
     - "default.yml"
 
 - name: SSSD | Assert that OS is supported
-  tags: [ 'sssd' ]
+  tags: 
+    - sssd
+    - install
+    - configure
   assert:
     that: sssd_os_supported
 
 - name: SSSD | Register existence of cache
+  tags:
+    - sssd
+    - install
   stat:
     path: /var/lib/sss/db/ccache*
   register: ccache
 
 - name: SSSD | Set facts for sssd_manage_service and sssd_allow_reload
+  tags:
+    - sssd
+    - install
+    - configure
+    - service
   set_fact:
     sssd_manage_service: "{{ false if ansible_virtualization_type == 'docker' else true }}"
     sssd_allow_reload: "{{ false if ansible_virtualization_type == 'docker' else true }}"
 
 - name: SSSD | Installation
-  tags: [ 'sssd', 'install' ]
+  tags: 
+    - sssd
+    - install
   package:
     name: "{{ item }}"
     state: installed
@@ -35,7 +49,9 @@
     - "{{ sssd_packages }}"
 
 - name: SSSD | Configuration
-  tags: [ 'sssd', 'configure' ]
+  tags: 
+    - sssd
+    - configure
   template:
     src: sssd.j2
     dest: "{{ sssd_configuration_file.filename }}"
@@ -44,7 +60,9 @@
     mode: "{{ sssd_configuration_file.mode}}"
 
 - name: SSSD | Service
-  tags: [ 'sssd', 'service' ]
+  tags: 
+    - sssd
+    - service
   service:
     name: "{{ sssd_service_name }}"
     state: started
