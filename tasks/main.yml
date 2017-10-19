@@ -21,6 +21,11 @@
     path: /var/lib/sss/db/ccache*
   register: ccache
 
+- name: SSSD | Set facts for sssd_manage_service and sssd_allow_reload
+  set_fact:
+    sssd_manage_service: "{{ false if ansible_virtualization_type == 'docker' else true }}"
+    sssd_allow_reload: "{{ false if ansible_virtualization_type == 'docker' else true }}"
+
 - name: SSSD | Installation
   tags: [ 'sssd', 'install' ]
   package:
@@ -44,11 +49,7 @@
     name: "{{ sssd_service_name }}"
     state: started
     enabled: yes
-  register: sssd_service_started
-  ignore_errors: true
-
-- debug:
-    var: sssd_service_started
+  when: sssd_manage_service
 
 - name: SSSD | Register that the sssd role has run
   tags: [ 'sssd' ]

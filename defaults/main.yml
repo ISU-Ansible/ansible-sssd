@@ -1,5 +1,9 @@
 ---
+sssd_manage_service: {}
+sssd_allow_reload: {}
+
 sssd_os_supported: false
+
 sssd_service_name: {}
 sssd_packages: []
 sssd_configuration_file: {}
