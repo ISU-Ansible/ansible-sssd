@@ -1,0 +1,58 @@
+---
+# We need sudo for some of the Docker commands.
+sudo: required
+
+env:
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro: centos6
+    init: /sbin/init
+    run_opts: ""
+  - distro: fedora24
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+
+# Tell Travis to start Docker when it brings up an environment.
+services:
+  - docker
+
+before_install:
+  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
+
+script:
+  - container_id=$(mktemp)
+
+  # Run container in detached state.
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+
+  # Ansible syntax check.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
+
+  # Test role.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
+
+  # Test role idempotence.
+  - idempotence=$(mktemp)
+  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml | tee -a ${idempotence}
+  - >
+    tail ${idempotence}
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+  # Test assertions.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test-assertions.yml'
+
+notifications:
+
+  email: false
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+  slack:
+    secure: gRJ+IGYc0pvHtuVzf9Er4ho6IRzQHyqKPvKspj+zXfr2oq5aCtN+WfvXyschSAKl7I07JZ5b2ceFSfUbLeJRoZOyBS57zyesS2fQ1qxsezt6BgPtkRmkXRaQ+AgQ2ZczcYfnHl4d3VUMI7Z3Yq7qAOARX1pjFaAN/ORFO/a8mJtVsOKp4vJ0ZcOle5FOUI3bBsnDGjeceiJr6sbq4BFEN8tWRR8bByDUFNADV/gjZIomc/u81XmtlTz+7SUprr+A74DwBKMDZpnnwY83Wd+rx8lNCYXwH00ujT1hCQwQQTgSSORy5z02r0X7y9u2CqGzChTaswEAR62j+7wzV86YNqsxXjE8YZ1YSZWtoUg+MGe9Xe2pHEc4U6/KElKFdFd9wgAK34OF4/qmSxBlrOJDBkS/jMYlRp1RjawvoT4qfKuO/+UrAdEOjG7FukFo532CALL5zf7ioDARIuumnI82+jJreZqMg0DPt9DAL93/aTw7IRhUzKIs8zKFN3wwdivNWErWKITB+9E6V2rXzRNc7DUbKj2QlM0shh9s9ZLc3igiiLRM2P3/M7UuqSY6huRUaRXd4hmwJGSMFE7VHBao2+pDPHAQpE0EtDTZ2YlGBzmvqk4pMSkTH/K9EDIc+OUl6sCPsnUTnwlX4Y5TjoOiER5PLp1bP+3P6vjmGGPGpSo=
+    on_success: always
+    on_failure: change
+    use_notice: true
+    template:
+      - '%{repository_name}#%{build_number} [%{author}] (%{commit}): %{message} %{foo} '
+      - 'Build details: %{build_url}'

@@ -6,21 +6,18 @@
     - role_under_test
 
   tasks:
-#    - name: "[Test] Does Configuration File Exist?"
-#      stat:
-#        path: "{{kerberos_config_file}}"
-#      register: kerberos_conf
-#
-#    - name: "[Test] Test File Defaults"
-#      shell: "cat {{kerberos_config_file}}"
-#      when: kerberos_conf.stat.exists == True
-#      register: kerberos_conf_contents
-#
-#    - debug:
-#        var: kerberos_conf_contents
-#
-#    - assert:
-#        that:
-#          - "kerberos_conf_contents.rc == 0"
-#          - "kerberos_conf_contents.stdout.find('.example.com = EXAMPLE.COM')"
-#          - "kerberos_conf_contents.stdout.find('example.com = EXAMPLE.COM')"
+    - name: "[Test] Does Configuration File Exist?"
+      stat:
+        path: "{{sssd_configuration_file}}"
+      register: sssd_conf
+
+    - name: "[Test] Test File Defaults"
+      shell: "cat {{sssd_configuration_file}}"
+      when: sssd_conf.stat.exists == True
+      register: sssd_conf_contents
+
+    - assert:
+        that:
+          - "sssd_conf_contents.rc == 0"
+          - "sssd_conf_contents.stdout.find('id_provider = local')"
+          - "sssd_conf_contents.stdout.find('access_provider = permit')"
