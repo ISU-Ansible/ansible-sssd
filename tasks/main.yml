@@ -18,8 +18,8 @@
 
 - name: SSSD | Register existence of cache
   stat:
-    path: /var/lib/sss/db/ccache_IASTATE.EDU
-  register: ccache_IASTATE
+    path: /var/lib/sss/db/ccache*
+  register: ccache
 
 - name: SSSD | Installation
   tags: [ 'sssd', 'install' ]
