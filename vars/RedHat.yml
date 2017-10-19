@@ -8,7 +8,6 @@ sssd_packages:
   - sssd-krb5
   - sssd-krb5-common
   - sssd-ldap
-  - sssd-nfs-idmap
   - sssd-dbus
   - sssd-common
 
