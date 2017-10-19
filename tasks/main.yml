@@ -45,6 +45,7 @@
     state: started
     enabled: yes
   register: sssd_service_started
+  ignore_errors: true
 
 - debug:
     var: sssd_service_started
