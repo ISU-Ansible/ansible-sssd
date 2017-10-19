@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  remote_user: root
+  
+  pre_tasks:
+    - name: clone encoder macros
+      git:
+        repo: 'https://github.com/ISU-Ansible/config-encoder-macros'
+        dest: '/etc/ansible/templates/encoder'
+
+  roles:
+    - role_under_test

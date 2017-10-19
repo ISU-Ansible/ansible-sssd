@@ -1,0 +1,26 @@
+{% macro body_section_option(key,section,override) -%}
+{%   set value = undefined %}
+{%   if override is defined %}
+{%     set value = override %}
+{%   elif sssd[section]is defined %}
+{%     if sssd[section][key] is defined %}
+{%       set value = sssd[section][key] %}
+{%     endif %}
+{%   elif sssd_defaults[section] is defined %}
+{%     if sssd_defaults[section][key] is defined and sssd_skip_defaults != true %}
+{%       set value = sssd_defaults[section][key] %}
+{%     endif %}
+{%   endif %}
+{{ render_option(key,value,comma) -}}
+{%- endmacro %}
+
+{#- Render Options Jinja Template #}
+{% macro render_option(key,value) -%}
+{%   if value is defined %}
+{%     if value is string or value is number %}
+{{ key }} = {{ value }}
+{%     else %}
+{{ key }} = {{ value | join(",") }}
+{%     endif %}
+{%   endif %}
+{%- endmacro %}
