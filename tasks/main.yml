@@ -12,7 +12,7 @@
     - "default.yml"
 
 - name: SSSD | Assert that OS is supported
-    tags: [ 'sssd' ]
+  tags: [ 'sssd' ]
   assert:
     that: sssd_os_supported
 
