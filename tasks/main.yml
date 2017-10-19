@@ -46,7 +46,7 @@
     enabled: yes
   register: sssd_service_started
 
-- name: SSSD | Register that the kerberos role has run
+- name: SSSD | Register that the sssd role has run
   tags: [ 'sssd' ]
-  set_fact: kerberos_has_run=true
-  when: kerberos_has_run is not defined
+  set_fact: sssd_has_run=true
+  when: sssd_has_run is not defined

@@ -21,7 +21,9 @@ sssd_configuration_file:
 sssd:
   sssd:
     domains: LOCAL
-    services: nss,pam
+    services: 
+      - nss
+      - pam
     config_file_version: 2
   nss:
     filter_groups: root

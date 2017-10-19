@@ -1,5 +1,5 @@
 {{ ansible_managed | comment }}
 
-{% from "templates/encoder/macros/ini_encode_macro.j2" import ini_encode with context -%}
+{% from "macros/ini_encode.j2" import ini_encode with context -%}
 
 {{ ini_encode(sssd) }}
