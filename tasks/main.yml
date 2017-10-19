@@ -46,6 +46,9 @@
     enabled: yes
   register: sssd_service_started
 
+- debug:
+    var: sssd_service_started
+
 - name: SSSD | Register that the sssd role has run
   tags: [ 'sssd' ]
   set_fact: sssd_has_run=true
