@@ -11,6 +11,8 @@ sssd_packages:
   - sssd-dbus
   - sssd-common
 
+sssd_service_name: sssd
+
 sssd_configuration_file: 
   mode: 0664
   owner: root
