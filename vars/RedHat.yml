@@ -14,7 +14,7 @@ sssd_packages:
 sssd_service_name: sssd
 
 sssd_configuration_file: 
-  mode: 0664
+  mode: "0600"
   owner: root
   group: root
   filename: /etc/sssd/sssd.conf
