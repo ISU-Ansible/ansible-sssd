@@ -18,20 +18,3 @@ sssd_configuration_file:
   owner: root
   group: root
   filename: /etc/sssd/sssd.conf
-
-sssd:
-  sssd:
-    domains: LOCAL
-    services: 
-      - nss
-      - pam
-    config_file_version: 2
-  nss:
-    filter_groups: root
-    filter_users: root
-  pam:
-    "# this is a comment": ""
-  'domain/LOCAL':
-    id_provider: local
-    auth_provider: local
-    access_provider: permit
