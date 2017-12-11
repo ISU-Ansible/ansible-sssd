@@ -8,6 +8,10 @@ None
 
 Role Variables
 --------------
+There are a few main configuration variables:
+
+* **sssd**: These are the default sssd configration options, which are placed into /etc/sssd/sssd.conf
+* **sssd_domains**: These are the sssd domains, which are placed into /etc/sssd/conf.d/_domain_.conf
 
 
 Dependencies

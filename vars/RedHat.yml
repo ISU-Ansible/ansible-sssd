@@ -12,6 +12,8 @@ sssd_packages:
 
 sssd_service_name: sssd
 
+sssd_skip_defaults: no
+
 sssd_configuration_file: /etc/sssd/sssd.conf
 sssd_comfiguration_domain: /etc/sssd/conf.d
 sssd_configuration_mode: "0600"
