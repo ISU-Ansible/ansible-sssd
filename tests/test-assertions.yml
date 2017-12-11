@@ -19,16 +19,16 @@
       register: sssd_conf
 
     - name: "[Test] Test File Defaults"
-      shell: "cat {{ sssd_configuration_file.filename }}"
+      shell: "cat {{ sssd_configuration_file }}"
       when: sssd_conf.stat.exists
       register: sssd_conf_contents
 
     - name: "[Test] Test domains"
-      shell: "cat /etc/sssd/conf.d/Test.conf"
-      register: sssd_Test.conf_contents
+      shell: "cat /etc/sssd/conf.d/domains.conf"
+      register: sssd_domains_contents
 
     - assert:
         that:
           - "sssd_conf_contents.rc == 0"
-          - "sssd_Test.conf_contents.stdout.find('id_provider = ad')"
+          - "sssd_domains_contents.stdout.find('id_provider = ad')"
           - "sssd_conf_contents.stdout.find('access_provider = permit')"
