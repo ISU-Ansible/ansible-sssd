@@ -71,7 +71,6 @@
     mode: "{{ sssd_configuration_mode}}"
   with_items: 
     - sssd_domain
-  when: sssd_domain 
 
 - name: SSSD | Service
   tags: 
