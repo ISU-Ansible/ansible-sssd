@@ -65,7 +65,7 @@
     - configure
   template: 
     src: sssd_domain.j2
-    dest: "{{ sssd_configuration_domain }}/{{ domain.name }}.conf"
+    dest: "{{ sssd_configuration_domain }}/{{ item.name }}.conf"
     owner: "{{ sssd_configuration_file.owner }}"
     group: "{{ sssd_configuration_file.group }}"
     mode: "{{ sssd_configuration_file.mode}}"

@@ -6,6 +6,9 @@
     sssd_domains:
       - name: "LOCAL"
         id_provider: local
+      - name: "Test"
+        id_provider: "ad"
+        domain_type: "ad"
   roles:
     - role_under_test
 
@@ -20,8 +23,12 @@
       when: sssd_conf.stat.exists
       register: sssd_conf_contents
 
+    - name: "[Test] Test domains"
+      shell: "cat /etc/sssd/conf.d/Test.conf"
+      register: sssd_Test.conf_contents
+
     - assert:
         that:
           - "sssd_conf_contents.rc == 0"
-          - "sssd_conf_contents.stdout.find('id_provider = local')"
+          - "sssd_Test.conf_contents.stdout.find('id_provider = ad')"
           - "sssd_conf_contents.stdout.find('access_provider = permit')"
