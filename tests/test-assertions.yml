@@ -15,8 +15,13 @@
   tasks:
     - name: "[Test] Does Configuration File Exist?"
       stat:
-        path: "{{ sssd_configuration_file.filename }}"
+        path: "{{ sssd_configuration_file }}"
       register: sssd_conf
+
+    - name: "[Test] Does domain configuraiton Exist?"
+      stat:
+        path: "{{ sssd_configuration_domain }}/domains.conf"
+      register: sssd_domains_conf
 
     - name: "[Test] Test File Defaults"
       shell: "cat {{ sssd_configuration_file }}"
@@ -24,7 +29,7 @@
       register: sssd_conf_contents
 
     - name: "[Test] Test domains"
-      shell: "cat /etc/sssd/conf.d/domains.conf"
+      shell: "cat {{ sssd_configuration_domain }}/domains.conf"
       register: sssd_domains_contents
 
     - debug:
