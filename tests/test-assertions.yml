@@ -2,6 +2,10 @@
 - hosts: localhost
   remote_user: root
 
+  vars:
+    sssd_domains:
+      - name: "LOCAL"
+        id_provider: local
   roles:
     - role_under_test
 

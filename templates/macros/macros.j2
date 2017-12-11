@@ -1,0 +1,72 @@
+{#- Body Sections Options #}
+{% macro body_section_option(section,key,override) -%}
+{%   set value = undefined %}
+{%   if override is defined %}
+{%     set value = override %}
+{%   elif sssd[section] is defined and sssd[section][key] is defined %}
+{%     set value = sssd[section][key] %}
+{%   elif sssd_defaults[section] is defined and sssd_defaults[section][key] is defined and sssd_skip_defaults != true %}
+{%     set value = sssd_defaults[section][key] %}
+{%   endif %}
+{{ render_option(key,value) -}}
+{%- endmacro %}
+
+{# Subset Options #}
+{% macro body_subset_option(key,override) -%}
+{%   set value = undefined %}
+{%   if override is defined %}
+{%     set value = override %}
+{%   elif sssd[key] is defined %}
+{%     set value = sssd[key] %}
+{%   elif sssd_defaults[key] is defined %}
+{%     set value = sssd_defaults[key] %}
+{%   endif %}
+{{ render_subset_option(key,value) }}
+{%- endmacro %}
+
+{#- Body Options #}
+{% macro body_option(key,override) -%}
+{%   set value = undefined %}
+{%   if override is defined %}
+{%     set value = override %}
+{%   elif sssd[key] is defined %}
+{%     set value = sssd[key] %}
+{%   elif sssd_defaults[key] is defined and sssd_skip_defaults != true %}
+{%     set value = sssd_defaults[key] %}
+{%   endif %}
+{{ render_option(key,value) -}}
+{%- endmacro %}
+
+{#- Render Options Jinja Template #}
+{% macro render_option(key,value,indent=false) -%}
+{%   if value is defined %}
+{%     if indent == true %}  {% endif %}
+{%     if value is string or value is number %}
+{{ key | replace("__",".") }} = {{ value }}
+{%     elif value is mapping %}
+{%       for k,v in value.iteritems() %}
+{{ k | replace("__",".") }} = {{ v }}
+{%       endfor %}
+{%     else %}
+{%       for i in value %}
+{{ key | replace("__",".") }} = {{ i }}
+{%       endfor %}
+{%     endif %}
+{%   endif %}
+{%- endmacro %}
+
+{% macro render_subset_option(key,value) -%}
+{%   if value is defined and value is mapping %}
+{%     for k1,v1 in value.iteritems() %}
+{{ k1 | replace("__",".") }} = {
+{%       if v1 is mapping %}
+{%         for k2,v2 in v1.iteritems() %}
+    {{ k2 | replace("__",".") }} = {{ v2 }}
+{%         endfor %}
+{%       else %}
+{{ v1 }}
+{%       endif %}
+{%     endfor %}
+}
+{%   endif %}
+{%- endmacro %}

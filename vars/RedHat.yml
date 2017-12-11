@@ -1,6 +1,5 @@
 ---
 sssd_os_supported: true
-
 sssd_packages:
   - sssd
   - sssd-ad
@@ -13,8 +12,21 @@ sssd_packages:
 
 sssd_service_name: sssd
 
-sssd_configuration_file: 
-  mode: "0600"
-  owner: root
-  group: root
-  filename: /etc/sssd/sssd.conf
+sssd_configuration_file: /etc/sssd/sssd.conf
+sssd_comfiguration_domain: /etc/sssd/conf.d
+sssd_configuration_mode: "0600"
+sssd_configuration_owner: root
+sssd_configuration_group: root
+
+sssd_defaults:
+  sssd:
+    services: 
+      - nss
+      - pam
+    config_file_version: 2
+  nss: {}
+  pam: {}
+   
+sssd_domains:
+  - name: "LOCAL"
+    id_provider: local

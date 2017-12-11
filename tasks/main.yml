@@ -59,6 +59,19 @@
     group: "{{ sssd_configuration_file.group }}"
     mode: "{{ sssd_configuration_file.mode}}"
 
+- name: SSSD | Domain Configuration
+  tags:
+    - sssd
+    - configure
+  template: 
+    src: sssd_domain.j2
+    dest: "{{ sssd_configuration_domain }}/{{ domain.name }}.conf"
+    owner: "{{ sssd_configuration_file.owner }}"
+    group: "{{ sssd_configuration_file.group }}"
+    mode: "{{ sssd_configuration_file.mode}}"
+  with_items: sssd_domain
+  when: sssd_domain 
+
 - name: SSSD | Service
   tags: 
     - sssd

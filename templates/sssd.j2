@@ -1,5 +1,129 @@
+{% from 'macros/macros.j2' import body_section_option,body_subset_option,render_subset_option with context -%}
 {{ ansible_managed | comment }}
 
-{% from "macros/ini_encode.j2" import ini_encode with context -%}
+[sssd]
+{{ body_section_option("sssd", "config_file_version", sssd_sssd_config_file_version) -}} 
+{{ body_section_option("sssd", "services", sssd_sssd_services) -}} 
+{{ body_section_option("sssd", "reconnection_retires", sssd_sssd_reconnection_retires) -}} 
+{{ body_section_option("sssd", "domains", sssd_sssd_domains) -}} 
+{{ body_section_option("sssd", "re_expression", sssd_sssd_re_expression) -}} 
+{{ body_section_option("sssd", "full_name_format", sssd_sssd_full_name_format) -}} 
+{{ body_section_option("sssd", "try_inotify", sssd_sssd_try_inotify) -}} 
+{{ body_section_option("sssd", "krb5_rcache_dir", sssd_sssd_krb5_rcache_dir) -}} 
+{{ body_section_option("sssd", "user", sssd_sssd_user) -}} 
+{{ body_section_option("sssd", "default_domain_suffix", sssd_sssd_default_domain_suffix) -}} 
+{{ body_section_option("sssd", "override_space", sssd_sssd_override_space) -}} 
+{{ body_section_option("sssd", "certificate_verification", sssd_sssd_certificate_verification) -}} 
+{{ body_section_option("sssd", "disable_netlink", sssd_sssd_disable_netlink) -}} 
+{{ body_section_option("sssd", "enable_files_domain", sssd_sssd_enable_files_domain) -}} 
+{{ body_section_option("sssd", "domain_resolution_order", sssd_sssd_domain_resolution_order) -}} 
 
-{{ ini_encode(sssd) }}
+[nss]
+{{ body_section_option("nss", "reconnection_retries", sssd_nss_reconnection_retries) -}}
+{{ body_section_option("nss", "fd_limit", sssd_nss_fd_limit) -}}
+{{ body_section_option("nss", "client_idle_timeout", sssd_nss_client_idle_timeout) -}}
+{{ body_section_option("nss", "offline_timeout", sssd_nss_offline_timeout) -}}
+{{ body_section_option("nss", "responder_idle_timeout", sssd_nss_responder_idle_timeout) -}}
+{{ body_section_option("nss", "cache_first", sssd_nss_cache_first) -}}
+{{ body_section_option("nss", "enum_cache_timeout", sssd_nss_enum_cache_timeout) -}}
+{{ body_section_option("nss", "entry_cache_nowait_percentage", sssd_nss_entry_cache_nowait_percentage) -}}
+{{ body_section_option("nss", "entry_negative_timeout", sssd_nss_entry_negative_timeout) -}}
+{{ body_section_option("nss", "local_negative_timeout", sssd_nss_local_negative_timeout) -}}
+{{ body_section_option("nss", "filter_users", sssd_nss_filter_users) -}}
+{{ body_section_option("nss", "filter_groups", sssd_nss_filter_groups) -}}
+{{ body_section_option("nss", "filter_users_in_groups", sssd_nss_filter_users_in_groups) -}}
+{{ body_section_option("nss", "override_homedir", sssd_nss_override_homedir) -}}
+{{ body_section_option("nss", "homedir_substring", sssd_nss_homedir_substring) -}}
+{{ body_section_option("nss", "fallback_homedir", sssd_nss_fallback_homedir) -}}
+{{ body_section_option("nss", "override_shell", sssd_nss_override_shell) -}}
+{{ body_section_option("nss", "allowed_shells", sssd_nss_allowed_shells) -}}
+{{ body_section_option("nss", "vetoed_shells", sssd_nss_vetoed_shells) -}}
+{{ body_section_option("nss", "shell_fallback", sssd_nss_shell_fallback) -}}
+{{ body_section_option("nss", "default_shell", sssd_nss_default_shell) -}}
+{{ body_section_option("nss", "get_domains_timeout", sssd_nss_get_domains_timeout) -}}
+{{ body_section_option("nss", "memcache_timeout", sssd_nss_memcache_timeout) -}}
+{{ body_section_option("nss", "user_attributes", sssd_nss_user_attributes) -}}
+{{ body_section_option("nss", "pwfield", sssd_nss_pwfield) -}}
+
+[pam]
+{{ body_section_option("pam", "reconnection_retries", sssd_pam_reconnection_retries) -}}
+{{ body_section_option("pam", "fd_limit", sssd_pam_fd_limit) -}}
+{{ body_section_option("pam", "client_idle_timeout", sssd_pam_client_idle_timeout) -}}
+{{ body_section_option("pam", "offline_timeout", sssd_pam_offline_timeout) -}}
+{{ body_section_option("pam", "responder_idle_timeout", sssd_pam_responder_idle_timeout) -}}
+{{ body_section_option("pam", "cache_first", sssd_pam_cache_first) -}}
+{{ body_section_option("pam", "offline_credentials_expiration", sssd_pam_offline_credentials_expiration) -}}
+{{ body_section_option("pam", "offline_failed_login_attempts", sssd_pam_offline_failed_login_attempts) -}}
+{{ body_section_option("pam", "offline_failed_login_delay", sssd_pam_offline_failed_login_delay) -}}
+{{ body_section_option("pam", "pam_verbosity", sssd_pam_pam_verbosity) -}}
+{{ body_section_option("pam", "pam_response_filter", sssd_pam_pam_response_filter) -}}
+{{ body_section_option("pam", "pam_id_timeout", sssd_pam_pam_id_timeout) -}}
+{{ body_section_option("pam", "pam_pwd_expiration_warning", sssd_pam_pam_pwd_expiration_warning) -}}
+{{ body_section_option("pam", "get_domains_timeout", sssd_pam_get_domains_timeout) -}}
+{{ body_section_option("pam", "pam_trusted_users", sssd_pam_pam_trusted_users) -}}
+{{ body_section_option("pam", "pam_public_domains", sssd_pam_pam_public_domains) -}}
+{{ body_section_option("pam", "pam_account_expired_message", sssd_pam_pam_account_expired_message) -}}
+{{ body_section_option("pam", "pam_account_locked_message", sssd_pam_pam_account_locked_message) -}}
+{{ body_section_option("pam", "pam_cert_auth", sssd_pam_pam_cert_auth) -}}
+{{ body_section_option("pam", "pam_cert_db_path", sssd_pam_pam_cert_db_path) -}}
+{{ body_section_option("pam", "p11_child_timeout", sssd_pam_p11_child_timeout) -}}
+{{ body_section_option("pam", "pam_app_services", sssd_pam_pam_app_services) -}}
+
+[sudo]
+{{ body_section_option("sudo", "reconnection_retries", sssd_sudo_reconnection_retries) -}}
+{{ body_section_option("sudo", "fd_limit", sssd_sudo_fd_limit) -}}
+{{ body_section_option("sudo", "client_idle_timeout", sssd_sudo_client_idle_timeout) -}}
+{{ body_section_option("sudo", "offline_timeout", sssd_sudo_offline_timeout) -}}
+{{ body_section_option("sudo", "responder_idle_timeout", sssd_sudo_responder_idle_timeout) -}}
+{{ body_section_option("sudo", "cache_first", sssd_sudo_cache_first) -}}
+{{ body_section_option("sudo", "sudo_timed", sssd_sudo_sudo_timed) -}}
+{{ body_section_option("sudo", "sudo_threshold", sssd_sudo_sudo_threshold) -}}
+
+[autofs]
+{{ body_section_option("autofs", "reconnection_retries", sssd_autofs_reconnection_retries) -}}
+{{ body_section_option("autofs", "fd_limit", sssd_autofs_fd_limit) -}}
+{{ body_section_option("autofs", "client_idle_timeout", sssd_autofs_client_idle_timeout) -}}
+{{ body_section_option("autofs", "offline_timeout", sssd_autofs_offline_timeout) -}}
+{{ body_section_option("autofs", "responder_idle_timeout", sssd_autofs_responder_idle_timeout) -}}
+{{ body_section_option("autofs", "cache_first", sssd_autofs_cache_first) -}}
+{{ body_section_option("autofs", "autofs_negative_timeout", sssd_autofs_autofs_negative_timeout) -}}
+
+[ssh]
+{{ body_section_option("ssh", "reconnection_retries", sssd_ssh_reconnection_retries) -}}
+{{ body_section_option("ssh", "fd_limit", sssd_ssh_fd_limit) -}}
+{{ body_section_option("ssh", "client_idle_timeout", sssd_ssh_client_idle_timeout) -}}
+{{ body_section_option("ssh", "offline_timeout", sssd_ssh_offline_timeout) -}}
+{{ body_section_option("ssh", "responder_idle_timeout", sssd_ssh_responder_idle_timeout) -}}
+{{ body_section_option("ssh", "cache_first", sssd_ssh_cache_first) -}}
+{{ body_section_option("ssh", "ssh_hash_known_hosts", sssd_ssh_ssh_hash_known_hosts) -}}
+{{ body_section_option("ssh", "ssh_known_hosts_timeout", sssd_ssh_ssh_known_hosts_timeout) -}}
+{{ body_section_option("ssh", "ca_db", sssd_ssh_ca_db) -}}
+
+[pac]
+{{ body_section_option("pac", "reconnection_retries", sssd_pac_reconnection_retries) -}}
+{{ body_section_option("pac", "fd_limit", sssd_pac_fd_limit) -}}
+{{ body_section_option("pac", "client_idle_timeout", sssd_pac_client_idle_timeout) -}}
+{{ body_section_option("pac", "offline_timeout", sssd_pac_offline_timeout) -}}
+{{ body_section_option("pac", "responder_idle_timeout", sssd_pac_responder_idle_timeout) -}}
+{{ body_section_option("pac", "cache_first", sssd_pac_cache_first) -}}
+{{ body_section_option("pac", "allowed_uids", sssd_pac_allowed_uids) -}}
+{{ body_section_option("pac", "pac_lifetime", sssd_pac_pac_lifetime) -}}
+
+[session_recording]
+{{ body_section_option("session_recording", "reconnection_retries", sssd_session_recording_reconnection_retries) -}}
+{{ body_section_option("session_recording", "fd_limit", sssd_session_recording_fd_limit) -}}
+{{ body_section_option("session_recording", "client_idle_timeout", sssd_session_recording_client_idle_timeout) -}}
+{{ body_section_option("session_recording", "offline_timeout", sssd_session_recording_offline_timeout) -}}
+{{ body_section_option("session_recording", "responder_idle_timeout", sssd_session_recording_responder_idle_timeout) -}}
+{{ body_section_option("session_recording", "cache_first", sssd_session_recording_cache_first) -}}
+{{ body_section_option("session_recording", "scope", sssd_session_recording_scope) -}}
+{{ body_section_option("session_recording", "users", sssd_session_recording_users) -}}
+{{ body_section_option("session_recording", "groups", sssd_session_recording_groups) -}}
+
+[ifp]
+{{ body_section_option("ifp", "reconnection_retries", sssd_ifp_reconnection_retries) -}}
+{{ body_section_option("ifp", "fd_limit", sssd_ifp_fd_limit) -}}
+{{ body_section_option("ifp", "client_idle_timeout", sssd_ifp_client_idle_timeout) -}}
+{{ body_section_option("ifp", "offline_timeout", sssd_ifp_offline_timeout) -}}
+{{ body_section_option("ifp", "responder_idle_timeout", sssd_ifp_responder_idle_timeout) -}}
+{{ body_section_option("ifp", "cache_first", sssd_ifp_cache_first) -}}
