@@ -27,6 +27,9 @@
       shell: "cat /etc/sssd/conf.d/domains.conf"
       register: sssd_domains_contents
 
+    - debug:
+        var: sssd_domains_contents
+
     - assert:
         that:
           - "sssd_conf_contents.rc == 0"
