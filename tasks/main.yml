@@ -69,7 +69,8 @@
     owner: "{{ sssd_configuration_owner }}"
     group: "{{ sssd_configuration_group }}"
     mode: "{{ sssd_configuration_mode}}"
-  with_items: sssd_domain
+  with_items: 
+    - sssd_domain
   when: sssd_domain 
 
 - name: SSSD | Service
