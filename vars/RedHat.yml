@@ -29,6 +29,6 @@ sssd_defaults:
   nss: {}
   pam: {}
    
-sssd_domains:
+sssd_domain:
   - name: "LOCAL"
     id_provider: local
