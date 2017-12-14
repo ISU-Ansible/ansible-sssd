@@ -27,25 +27,12 @@
         path: "{{ sssd_configuration_file }}"
       register: sssd_conf
 
-    - name: "[Test] Does domain configuraiton Exist?"
-      stat:
-        path: "{{ sssd_configuration_domain }}/domains.conf"
-      register: sssd_domains_conf
-
-    - name: "[Test] Test File Defaults"
+    - name: "[Test] Test Configuration as provided"
       shell: "cat {{ sssd_configuration_file }}"
       when: sssd_conf.stat.exists
       register: sssd_conf_contents
 
-    - name: "[Test] Test domains"
-      shell: "cat {{ sssd_configuration_domain }}/domains.conf"
-      register: sssd_domains_contents
-
-    - debug:
-        var: sssd_domains_contents
-
     - assert:
         that:
           - "sssd_conf_contents.rc == 0"
-          - "sssd_domains_contents.stdout.find('id_provider = ad')"
-          - "sssd_conf_contents.stdout.find('access_provider = permit')"
+          - "sssd_conf_contents.stdout.find('id_provider = ad')"
