@@ -18,6 +18,7 @@
         id_provider: ad
 
   roles:
+    - ISU-Ansible.config_encoder_filters
     - role_under_test
 
   tasks:
