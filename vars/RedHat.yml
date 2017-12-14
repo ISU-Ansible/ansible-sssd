@@ -15,20 +15,18 @@ sssd_service_name: sssd
 sssd_skip_defaults: no
 
 sssd_configuration_file: /etc/sssd/sssd.conf
-sssd_configuration_domain: /etc/sssd/conf.d
 sssd_configuration_mode: "0600"
 sssd_configuration_owner: root
 sssd_configuration_group: root
 
-sssd_defaults:
+sssd:
   sssd:
     services: 
       - nss
       - pam
     config_file_version: 2
-  nss: {}
-  pam: {}
-   
-sssd_domain:
-  - name: "LOCAL"
-    id_provider: local
+  nss:
+    filter_users: root
+    filter_groups: root
+  pam:
+    reconnection_retries: 3

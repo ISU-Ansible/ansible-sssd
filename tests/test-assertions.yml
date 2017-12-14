@@ -3,12 +3,20 @@
   remote_user: root
 
   vars:
-    sssd_domains:
-      - name: "LOCAL"
-        id_provider: local
-      - name: "Test"
-        id_provider: "ad"
-        domain_type: "ad"
+    sssd:
+      sssd:
+        services: 
+          - nss
+          - pam
+        config_file_version: 2
+      nss:
+        filter_users: root
+        filter_groups: root
+      pam:
+        reconnection_retries: 3
+      'domain/LOCAL':
+        id_provider: ad
+
   roles:
     - role_under_test
 
