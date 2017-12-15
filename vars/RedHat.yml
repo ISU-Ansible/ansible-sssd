@@ -19,7 +19,7 @@ sssd_configuration_mode: "0600"
 sssd_configuration_owner: root
 sssd_configuration_group: root
 
-sssd:
+sssd_defaults:
   sssd:
     services: 
       - nss
