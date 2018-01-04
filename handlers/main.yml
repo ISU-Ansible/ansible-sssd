@@ -3,13 +3,16 @@
   service:
     name: sssd
     state: stopped
+  when: sssd_manage_service 
 
 - name: Start sssd
   service:
     name: sssd
     state: started
+  when: sssd_manage_service
 
 - name: Restart sssd
   service:
     name: sssd
     state: restarted
+  when: sssd_manage_service
