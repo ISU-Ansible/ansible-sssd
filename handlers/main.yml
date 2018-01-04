@@ -13,8 +13,3 @@
   service:
     name: sssd
     state: restarted
-
-- name: Clean sssd
-  shell: /usr/sbin/sss_cache -E 2>&1 /dev/null
-  when: ccache_IASTATE.stat.exists
-  ignore_errors: yes

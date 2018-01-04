@@ -58,6 +58,7 @@
     owner: "{{ sssd_configuration_owner }}"
     group: "{{ sssd_configuration_group }}"
     mode: "{{ sssd_configuration_mode }}"
+  notify: Restart sssd
 
 - name: SSSD | Service
   tags: 
