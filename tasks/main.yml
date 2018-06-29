@@ -35,8 +35,8 @@
     - configure
     - service
   set_fact:
-    sssd_manage_service: "{{ false if ansible_virtualization_type == 'docker' else true }}"
-    sssd_allow_reload: "{{ false if ansible_virtualization_type == 'docker' else true }}"
+    sssd_manage_service: "{{ false if ansible_virtualization_type is defined and ansible_virtualization_type == 'docker' else true }}"
+    sssd_allow_reload: "{{ false if ansible_virtualization_type is defined and ansible_virtualization_type == 'docker' else true }}"
 
 - name: SSSD | Installation
   tags: 
